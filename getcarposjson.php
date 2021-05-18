@@ -1,15 +1,20 @@
 <?php
+date_default_timezone_set("Asia/Taipei");
 ignore_user_abort(true);
 set_time_limit(0);
-
 
 include_once "CarMap.php";
 include_once "LineNotify.php";
 
 if("Y"=="Y"){   
+    $h = date("H");
 
-    sleep(20); // sleep 1分鐘 (以秒為單位)
-
+    // sleep 1分鐘 (以秒為單位)
+    if($h=>18 AND $h<=19){
+        sleep(10); 
+    }else{
+        sleep(1800);
+    }
 
     $CarDataUrl = 'http://117.56.173.200/ilepb_test/api/getcarposjson.ashx';
     $RouteId = 24; //垃圾車所屬ID
@@ -22,9 +27,9 @@ if("Y"=="Y"){
     echo $meter;
 
     if($meter<=50){
-      $Token = 'Ugy1sIpxGnjN7dY3oHeX8D6yTm0KkEnRkVbterWTJI5';
+      $Token = 'HSyfpiXRetffZi1Ob8K5EjEzusSpCIGwRJ3LMBtQBMf';
       $notify = new LineNotify($Token);
-      $notify->PoMessage(" $meter 垃圾車快到嘍!!");
+      $notify->PoMessage("垃圾車快到嘍!!");
     }
 
     $content = date("Y-m-d H:i:s") . PHP_EOL;
@@ -44,8 +49,5 @@ if("Y"=="Y"){
     curl_setopt_array($ch, $options);
     curl_exec($ch);
 }
-
-
-
 ?>
 
